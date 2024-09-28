@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+// import { ViewTransitions } from "astro:transitions";
 import { siteInfo } from "src/constants/site-info";
 
 interface Props {
@@ -26,7 +26,12 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:image" content={image} />
     <title>{title}</title>
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
+    <style>
+      @view-transition {
+        navigation: auto; /* enabled! */
+      }
+    </style>
   </head>
   <body class="bg-slate-800 text-slate-100 m-auto max-w-3xl">
     <main class="mt-10">
