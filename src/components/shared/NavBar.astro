@@ -46,7 +46,7 @@ const currentPath = Astro.url.pathname;
       ))
     }
     <button
-      type="button"
+      id="btn-github"
       class="absolute right-6 text-gray-200 hover:text-blue-500 focus:outline-none"
       onclick="window.open('https://github.com/carlosxfelipe', '_blank')"
     >
@@ -54,3 +54,9 @@ const currentPath = Astro.url.pathname;
     </button>
   </div>
 </nav>
+
+<style>
+  #btn-github {
+    @apply hover:animate-pulse;
+  }
+</style>
