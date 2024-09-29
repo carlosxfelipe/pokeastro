@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 const links = [
   { href: "/", text: "Home" },
   { href: "/pokemons/1", text: "Lista Pokémon" },
@@ -43,5 +45,12 @@ const currentPath = Astro.url.pathname;
         </div>
       ))
     }
+    <button
+      type="button"
+      class="absolute right-6 text-gray-200 hover:text-blue-500 focus:outline-none"
+      onclick="window.open('https://github.com/carlosxfelipe', '_blank')"
+    >
+      <Icon name="github" color="white" size={28} />
+    </button>
   </div>
 </nav>
