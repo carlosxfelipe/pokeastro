@@ -42,8 +42,14 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
         <Title>{name}</Title>
       </div>
       <button id="btn-favorite" class="ml-4" data-name={name} data-id={id}>
-        <Icon name="heart-light" size={50} color={"red"} />
-        <Icon class="hidden" name="heart-fill" size={50} color={"red"} />
+        <Icon data-outline name="heart-outline" size={50} color={"red"} />
+        <Icon
+          data-full
+          class="hidden"
+          name="heart-filled"
+          size={50}
+          color={"red"}
+        />
       </button>
     </div>
     <PokemonCard name={name} url={url} isBig />
@@ -59,7 +65,31 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     id: number;
   }
 
-  document.addEventListener("astro:page-load", () => {
+  // document.addEventListener("astro:before-preparation", () => {
+  //   console.log("astro:before-preparation");
+  // });
+
+  // document.addEventListener("astro:after-preparation", () => {
+  //   console.log("astro:after-preparation");
+  // });
+
+  // document.addEventListener("astro:before-swap", () => {
+  //   console.log("astro:before-swap");
+  // });
+
+  // document.addEventListener("astro:after-swap", () => {
+  //   console.log("astro:after-swap");
+  // });
+
+  // document.addEventListener("astro:page-load", () => {
+  //   console.log("astro:page-load");
+  // });
+
+  const handlePageLoad = () => {
+    let favoritePokemon: FavoritePokemon[] = JSON.parse(
+      localStorage.getItem("favorites") ?? "[]"
+    );
+
     const btnFavorite = document.querySelector(
       "#btn-favorite"
     ) as HTMLButtonElement;
@@ -69,10 +99,19 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     const name = btnFavorite.dataset.name;
     const id = btnFavorite.dataset.id;
 
+    const heartOutline = btnFavorite.querySelector(
+      "[data-outline]"
+    ) as HTMLElement;
+
+    const heartFilled = btnFavorite.querySelector("[data-full]") as HTMLElement;
+
     btnFavorite.addEventListener("click", () => {
-      console.log({ name, id });
+      heartOutline.classList.toggle("hidden");
+      heartFilled.classList.toggle("hidden");
     });
-  });
+  };
+
+  document.addEventListener("astro:page-load", handlePageLoad);
 </script>
 
 <style>
