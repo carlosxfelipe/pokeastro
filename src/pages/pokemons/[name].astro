@@ -86,7 +86,7 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
   // });
 
   const handlePageLoad = () => {
-    let favoritePokemon: FavoritePokemon[] = JSON.parse(
+    let favoritePokemons: FavoritePokemon[] = JSON.parse(
       localStorage.getItem("favorites") ?? "[]"
     );
 
@@ -96,18 +96,41 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 
     if (!btnFavorite) return;
 
-    const name = btnFavorite.dataset.name;
-    const id = btnFavorite.dataset.id;
+    const name = btnFavorite.dataset.name ?? "";
+    const id = btnFavorite.dataset.id ?? "";
 
     const heartOutline = btnFavorite.querySelector(
       "[data-outline]"
     ) as HTMLElement;
-
     const heartFilled = btnFavorite.querySelector("[data-full]") as HTMLElement;
+
+    const isFavorite = favoritePokemons.some((fav) => fav.name === name);
+
+    if (isFavorite) {
+      heartOutline.classList.add("hidden");
+      heartFilled.classList.remove("hidden");
+    }
+
+    const toggleFavorite = () => {
+      const isFavorite = favoritePokemons.some((fav) => fav.name === name);
+
+      if (isFavorite) {
+        favoritePokemons = favoritePokemons.filter((fav) => fav.name !== name);
+      } else {
+        favoritePokemons.push({
+          id: +id,
+          name: name,
+        });
+      }
+
+      localStorage.setItem("favorites", JSON.stringify(favoritePokemons));
+    };
 
     btnFavorite.addEventListener("click", () => {
       heartOutline.classList.toggle("hidden");
       heartFilled.classList.toggle("hidden");
+
+      toggleFavorite();
     });
   };
 
